@@ -65,7 +65,7 @@ Sans la prochaine étapes il y a un message d'erreur car nous n'avons pas encore
 
 Pour avoir de nouvelle page il suffit de créé des nouveaux fichiers dans le même dossier que `welcome.blade.php` avec l'exstension `.blade.php`
 
-![New page](images\new-page1.PNG)
+![New page](images/new-page1.PNG)
 
 J'ai fait copier/coller de la page `welcome.blade.php` en changeant le titre
 
