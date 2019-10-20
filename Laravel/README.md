@@ -24,7 +24,7 @@ J'utilise:
 
 Premier projet créé et lancé avec un premier visuel
 
-![Visuel](visuel1.PNG)
+![Visuel](images\visuel1.PNG)
 
 * Connecter la base de données
 
@@ -65,7 +65,7 @@ Sans la prochaine étapes il y a un message d'erreur car nous n'avons pas encore
 
 Pour avoir de nouvelle page il suffit de créé des nouveaux fichiers dans le même dossier que `welcome.blade.php` avec l'exstension `.blade.php`
 
-![New page](new-page1.PNG)
+![New page](images\new-page1.PNG)
 
 J'ai fait copier/coller de la page `welcome.blade.php` en changeant le titre
 
@@ -102,9 +102,9 @@ Ensuite il faut définir des routes vers ces pages dans `routes\web.php`
 
 Maintenant rafraichissons la page
 
-![visuel2](visuel2.PNG)
+![visuel2](images\visuel2.PNG)
 
-![visuel3](visuel3.PNG)
+![visuel3](images\visuel3.PNG)
 
 * Créer un `UserTableSeeder` pour remplir la base de données de 100 utilisateurs
 
@@ -118,6 +118,7 @@ Seeder created successfully.
 Nous rajoutons ensuite cette ligne dans notre fichier
 
 `factory(App\User::class, 100)->create();`
+
 
 UsersTableSeeder.php
 
@@ -139,11 +140,12 @@ UsersTableSeeder.php
         }
     }
 ```
+Ne pas oublier de décomenter `$this->call(UsersTableSeeder::class);` dans `DatabaseSeeder.php`
 
 Après modification on utilise la commande `composer autoload` pour généré nos utilisateur 
 
 Vérification de la création des Users
 
-![verif1](verif1.PNG)
+![verif1](images\verif1.PNG)
 
 ## Séance numéro deux
