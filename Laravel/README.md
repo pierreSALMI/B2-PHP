@@ -102,9 +102,9 @@ Ensuite il faut définir des routes vers ces pages dans `routes\web.php`
 
 Maintenant rafraichissons la page
 
-![visuel2](images\visuel2.PNG)
+![visuel2](images/visuel2.PNG)
 
-![visuel3](images\visuel3.PNG)
+![visuel3](images/visuel3.PNG)
 
 * Créer un `UserTableSeeder` pour remplir la base de données de 100 utilisateurs
 
@@ -146,6 +146,6 @@ Après modification on utilise la commande `composer autoload` pour généré no
 
 Vérification de la création des Users
 
-![verif1](images\verif1.PNG)
+![verif1](images/verif1.PNG)
 
 ## Séance numéro deux
