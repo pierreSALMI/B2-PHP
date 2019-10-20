@@ -24,7 +24,7 @@ J'utilise:
 
 Premier projet créé et lancé avec un premier visuel
 
-![Visuel](images\visuel1.PNG)
+![Visuel](images/visuel1.PNG)
 
 * Connecter la base de données
 
