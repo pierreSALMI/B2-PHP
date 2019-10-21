@@ -148,4 +148,4 @@ Vérification de la création des Users
 
 ![verif1](images/verif1.PNG)
 
-## Séance numéro deux
+## Séance 2
