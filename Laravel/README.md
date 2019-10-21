@@ -199,6 +199,33 @@ Le fichier `database/seeds/RolesTableSeeder.php` vient d'etre créé on y ajoute
         $user->assignRole($role_user);
     });
 ```
-
+On vérifie la table `Role`
 ![verif2](images/Verif2.PNG)
+
+
+### Utiliser Middleware
+
+* Créer trois contrôler qui portent le nom des trois rôles que vous avez créé
+
+`php artisan make:controller adminController`
+`php artisan make:controller modoController`
+`php artisan make:controller userController`
+
+* Créer trois vues que vous retournerez dans l'index de 3 controller (une vue par index de controller)
+
+Dans chaque contoller la méthode **index** retourne la vue correspondant au role
+```PHP
+    public function index(){
+            return view('[Role]');
+        }
+```
+
+* Créer trois routes qui permettent d'accéder à ces 3 vues en fonction des 3 roles (un roles ne peut accéder qu'à une vue)
+
+Chaque `route` appelle l'`index` du `controller` et vérifie si le `role` correspond à la page demandé.
+```PHP
+Route::get('/admin', 'adminController@index')->name('admin')->middleware('auth','role:admin');
+Route::get('/modo', 'modoController@index')->name('modo')->middleware('auth','role:modo');
+Route::get('/user', 'userController@index')->name('user')->middleware('auth','role:user');
+```
 
