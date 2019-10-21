@@ -122,7 +122,7 @@ Nous rajoutons ensuite cette ligne dans notre fichier
 
 UsersTableSeeder.php
 
-```
+``` PHP
     <?php
 
     use Illuminate\Database\Seeder;
@@ -161,6 +161,7 @@ On ajoute la ligne ci-dessous dans `config/app.php`
 ` Spatie\Permission\PermissionServiceProvider::class`
 
 On termine en publiant la migrations
+
 ` php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"`
 
 * Création d'un seeder: `RolesTableSeeder`
@@ -168,3 +169,30 @@ On termine en publiant la migrations
 Pour créé un seeder et sont fichier on utilise la commande : 
 `php artisan make:seeder RolesTableSeeder`
 
+Le fichier `database/seeds/RolesTableSeeder.php` vient d'etre créé on y ajoute ensuite : `use Spatie\Permission\Models\Role;`
+
+
+* Création de **User** avec un **Role**
+* *    10 users Admin
+* *    40 users Modo
+* *    50 users User
+
+``` PHP
+    //admin
+    $role_admin = Role::where('name', 'admin')->first();
+    factory(App\User::class, 10)->create()->each(function ($user) use ($role_admin) {
+        $user->assignRole($role_admin);
+    });
+
+    //modo
+    $role_modo = Role::where('name', 'modo')->first();
+    factory(App\User::class, 40)->create()->each(function ($user) use ($role_modo) {
+        $user->assignRole($role_modo);
+    });
+
+    //user
+    $role_user = Role::where('name', 'user')->first();
+    factory(App\User::class, 50)->create()->each(function ($user) use ($role_user) {
+        $user->assignRole($role_user);
+    });
+```
