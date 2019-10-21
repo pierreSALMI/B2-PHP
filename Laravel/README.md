@@ -17,7 +17,7 @@ J'utilise:
 `composer create-project --prefer-dist laravel/laravel [projet]`
 
 * Lancement:
-```
+``` 
     pierre~>php artisan serve
     Laravel development server started: <http://127.0.0.1:8000>
 ```
@@ -29,7 +29,7 @@ Premier projet créé et lancé avec un premier visuel
 * Connecter la base de données
 
 Il faut modfier le fichier `.env`
-```
+``` PHP
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
@@ -44,7 +44,7 @@ La modification d'une page ce fait dans le dossier `ressource\views\`
 
 Nous modifions `welcome.blade.php` qui est la page d'accueil et nous y ajoutons les routes vers de nouvelles pages que l'on vas créé
 
-```
+``` PHP
     <div class="content">
         <div class="title m-b-md">
             Yop
@@ -71,7 +71,7 @@ J'ai fait copier/coller de la page `welcome.blade.php` en changeant le titre
 
 Ensuite il faut définir des routes vers ces pages dans `routes\web.php`
 
-```
+``` PHP
     <?php
 
     /*
@@ -178,21 +178,26 @@ Le fichier `database/seeds/RolesTableSeeder.php` vient d'etre créé on y ajoute
 * *    50 users User
 
 ``` PHP
-    //admin
+    //Initialistion des Roles
     $role_admin = Role::where('name', 'admin')->first();
+    $role_modo = Role::where('name', 'modo')->first();
+    $role_user = Role::where('name', 'user')->first();
+
+    //Création des Users avec un role
+    //Admin
     factory(App\User::class, 10)->create()->each(function ($user) use ($role_admin) {
         $user->assignRole($role_admin);
     });
 
-    //modo
-    $role_modo = Role::where('name', 'modo')->first();
+    //Modo
     factory(App\User::class, 40)->create()->each(function ($user) use ($role_modo) {
         $user->assignRole($role_modo);
     });
 
-    //user
-    $role_user = Role::where('name', 'user')->first();
+    //User
     factory(App\User::class, 50)->create()->each(function ($user) use ($role_user) {
         $user->assignRole($role_user);
     });
 ```
+
+![verif2](images/verif2.PNG)
