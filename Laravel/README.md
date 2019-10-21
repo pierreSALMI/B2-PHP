@@ -149,3 +149,22 @@ Vérification de la création des Users
 ![verif1](images/verif1.PNG)
 
 ## Séance 2
+
+### Ajout des rôles
+
+* Installer la librairie Spatie/permission en suivant la documentation
+
+` composer require spatie/laravel-permission`
+
+On ajoute la ligne ci-dessous dans `config/app.php`
+
+` Spatie\Permission\PermissionServiceProvider::class`
+
+On termine en publiant la migrations
+` php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"`
+
+* Création d'un seeder: `RolesTableSeeder`
+
+Pour créé un seeder et sont fichier on utilise la commande : 
+`php artisan make:seeder RolesTableSeeder`
+
