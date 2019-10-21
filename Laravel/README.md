@@ -201,3 +201,4 @@ Le fichier `database/seeds/RolesTableSeeder.php` vient d'etre créé on y ajoute
 ```
 
 ![verif2](images/verif2.PNG)
+
