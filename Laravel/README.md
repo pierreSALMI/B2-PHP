@@ -366,5 +366,5 @@ class ProfileTableSeeder extends Seeder
 }
 ```
 
-![verif3](verif3.PNG)
+![verif3](images/verif3.PNG)
 
