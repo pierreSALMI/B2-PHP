@@ -13,10 +13,10 @@ J'utilise:
 
 ### Créer son premier projet
 
-* Création: 
+#### Création: 
 `composer create-project --prefer-dist laravel/laravel [projet]`
 
-* Lancement:
+#### Lancement:
 ``` 
     pierre~>php artisan serve
     Laravel development server started: <http://127.0.0.1:8000>
@@ -26,7 +26,7 @@ Premier projet créé et lancé avec un premier visuel
 
 ![Visuel](images/visuel1.PNG)
 
-* Connecter la base de données
+#### Connecter la base de données
 
 Il faut modfier le fichier `.env`
 ``` PHP
@@ -38,7 +38,7 @@ Il faut modfier le fichier `.env`
     DB_PASSWORD=root
 ```
 
-* Modification de la page d'accueil
+#### Modification de la page d'accueil
 
 La modification d'une page ce fait dans le dossier `ressource\views\`
 
@@ -60,7 +60,7 @@ Nous modifions `welcome.blade.php` qui est la page d'accueil et nous y ajoutons 
 ```
 Sans la prochaine étapes il y a un message d'erreur car nous n'avons pas encore définie les routes.
 
-* Création de nouvelle page (Presentation/Contact/Autres)
+#### Création de nouvelle page (Presentation/Contact/Autres)
 
 
 Pour avoir de nouvelle page il suffit de créé des nouveaux fichiers dans le même dossier que `welcome.blade.php` avec l'exstension `.blade.php`
@@ -106,7 +106,7 @@ Maintenant rafraichissons la page
 
 ![visuel3](images/visuel3.PNG)
 
-* Créer un `UserTableSeeder` pour remplir la base de données de 100 utilisateurs
+#### Créer un `UserTableSeeder` pour remplir la base de données de 100 utilisateurs
 
 On utilise la commande ci-dssous, qui créera un fichier `database\seeds\UsersTableSeeder.php`
 
@@ -120,7 +120,7 @@ Nous rajoutons ensuite cette ligne dans notre fichier
 `factory(App\User::class, 100)->create();`
 
 
-UsersTableSeeder.php
+**UsersTableSeeder.php**
 
 ``` PHP
     <?php
@@ -152,7 +152,7 @@ Vérification de la création des Users
 
 ### Ajout des rôles
 
-* Installer la librairie Spatie/permission en suivant la documentation
+#### Installer la librairie Spatie/permission en suivant la documentation
 
 ` composer require spatie/laravel-permission`
 
@@ -164,7 +164,7 @@ On termine en publiant la migrations
 
 ` php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"`
 
-* Création d'un seeder: `RolesTableSeeder`
+#### Création d'un seeder: `RolesTableSeeder`
 
 Pour créé un seeder et sont fichier on utilise la commande : 
 `php artisan make:seeder RolesTableSeeder`
@@ -172,10 +172,10 @@ Pour créé un seeder et sont fichier on utilise la commande :
 Le fichier `database/seeds/RolesTableSeeder.php` vient d'etre créé on y ajoute ensuite : `use Spatie\Permission\Models\Role;`
 
 
-* Création de **User** avec un **Role**
-* *    10 users Admin
-* *    40 users Modo
-* *    50 users User
+#### Création de **User** avec un **Role**
+  *    10 users Admin
+  *    40 users Modo
+  *    50 users User
 
 ``` PHP
     //Initialistion des Roles
@@ -205,7 +205,7 @@ On vérifie la table `Role`
 
 ### Utiliser Middleware
 
-* Créer trois contrôler qui portent le nom des trois rôles que vous avez créé
+#### Créer trois contrôler qui portent le nom des trois rôles que vous avez créé
 
 `php artisan make:controller adminController`
 
@@ -213,7 +213,7 @@ On vérifie la table `Role`
 
 `php artisan make:controller userController`
 
-* Créer trois vues que vous retournerez dans l'index de 3 controller (une vue par index de controller)
+#### Créer trois vues que vous retournerez dans l'index de 3 controller (une vue par index de controller)
 
 Dans chaque controller la méthode **index** retourne la vue correspondant au role
 ```PHP
@@ -222,7 +222,7 @@ Dans chaque controller la méthode **index** retourne la vue correspondant au ro
         }
 ```
 
-* Créer trois routes qui permettent d'accéder à ces 3 vues en fonction des 3 roles (un roles ne peut accéder qu'à une vue)
+#### Créer trois routes qui permettent d'accéder à ces 3 vues en fonction des 3 roles (un roles ne peut accéder qu'à une vue)
 
 Chaque `route` appelle l'`index` du `controller` et vérifie si le `role` correspond à la page demandé.
 ```PHP
@@ -234,13 +234,13 @@ Route::get('/user', 'userController@index')->name('user')->middleware('auth','ro
 
 ### Créer un Profile
 
-* Créer un model profile avec un contrôler, une factory, une migration 
+#### Créer un model profile avec un contrôler, une factory, une migration 
 
 `php artisan make:model Profile --all`
 
 Cette commande nous génére le modele `Profile` et l'option `--all` nous genere aussi le controller, la factory et la migration.
 
-* Un user possède un profile et un profile un seul user
+#### Un user possède un profile et un profile un seul user
 
 Pour cela on utilisera la fonction `hasOne()`
 
@@ -258,7 +258,7 @@ Pour cela on utilisera la fonction `hasOne()`
     }
 ```
 
-* Un profile a des champs (nom, prénom, âge, numéro de téléphone, adresse)
+#### Un profile a des champs (nom, prénom, âge, numéro de téléphone, adresse)
 
 On remplie les champs de modele/factory/migration de Profile sinon ça ne fonctionne pas 
 
@@ -340,7 +340,7 @@ class CreateProfileTable extends Migration
 }
 ```
 
-* Créer un Seeder qui met un profil à chaque utilisateur
+#### Créer un Seeder qui met un profil à chaque utilisateur
 
 **ProfileTableSeeder.php**
 
