@@ -208,12 +208,14 @@ On vérifie la table `Role`
 * Créer trois contrôler qui portent le nom des trois rôles que vous avez créé
 
 `php artisan make:controller adminController`
+
 `php artisan make:controller modoController`
+
 `php artisan make:controller userController`
 
 * Créer trois vues que vous retournerez dans l'index de 3 controller (une vue par index de controller)
 
-Dans chaque contoller la méthode **index** retourne la vue correspondant au role
+Dans chaque controller la méthode **index** retourne la vue correspondant au role
 ```PHP
     public function index(){
             return view('[Role]');
@@ -228,4 +230,141 @@ Route::get('/admin', 'adminController@index')->name('admin')->middleware('auth',
 Route::get('/modo', 'modoController@index')->name('modo')->middleware('auth','role:modo');
 Route::get('/user', 'userController@index')->name('user')->middleware('auth','role:user');
 ```
+
+
+### Créer un Profile
+
+* Créer un model profile avec un contrôler, une factory, une migration 
+
+`php artisan make:model Profile --all`
+
+Cette commande nous génére le modele `Profile` et l'option `--all` nous genere aussi le controller, la factory et la migration.
+
+* Un user possède un profile et un profile un seul user
+
+Pour cela on utilisera la fonction `hasOne()`
+
+**User.php**
+```PHP
+    public function HasProfile() {
+        return $this->hasOne('App\Profile');
+    }
+```
+
+**Profile.php**
+```PHP
+    public function IsUser() {
+        return $this->hasOne('App\User');
+    }
+```
+
+* Un profile a des champs (nom, prénom, âge, numéro de téléphone, adresse)
+
+On remplie les champs de modele/factory/migration de Profile sinon ça ne fonctionne pas 
+
+**Profile.php**
+
+```PHP
+   protected $fillable = [
+    'firstname',
+    'lastname',
+    'birthDate',
+    'numTel',
+    'adresse'
+];
+```
+
+**ProfileFactory.php**
+
+On préremplie Factory avec de fausse données d'où l'utilisation de `$faker`
+
+```PHP
+<?php
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Profile;
+use Faker\Generator as Faker;
+
+$factory->define(Profile::class, function (Faker $faker) {
+    return [
+        'firstname' => $faker->firstName,
+        'lastname' => $faker->lastName,
+        'birthDate'=> $faker->dateTimeThisCentury->format('Y-m-d'),
+        'numTel'=> $faker->tollFreePhoneNumber,
+        'adresse' => $faker->address,
+    ];
+});
+```
+
+**2019_10_14_103019_create_profile_table.php**(migration)
+
+```PHP
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateProfileTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('profile', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('lastname');
+            $table->string('firstname');
+            $table->date('birthDate');
+            $table->string('numTel');
+            $table->string('adresse');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('profile');
+    }
+}
+```
+
+* Créer un Seeder qui met un profil à chaque utilisateur
+
+**ProfileTableSeeder.php**
+
+```PHP
+<?php
+
+use Illuminate\Database\Seeder;
+use App\User;
+
+class ProfileTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        User::all()->each(function($user){
+            $user->hasProfile()->save(factory(App\Profile::class)->create());
+        });
+    }
+}
+```
+
+![verif3](verif3.PNG)
 
