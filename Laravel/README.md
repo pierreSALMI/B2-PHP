@@ -368,3 +368,71 @@ class ProfileTableSeeder extends Seeder
 
 ![verif3](images/verif3.PNG)
 
+## Séance 3: Formulaire
+
+### Exercice 1 : CRUD Profile
+
+#### Ajouter les fonctions show, édit, update dans le controller Profile
+
+```PHP
+    public function show()
+    {
+        $id = Auth::user()->id;
+        $profile = Profile::where('id', $id)->first();
+        return view('layouts.show', ['profile' => $profile]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        $id = Auth::user()->id;
+        $profile = Profile::where('id', $id)->first();
+        return view('layouts.edit', ['profile' => $profile]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'firstname'=>'required|string',
+            'lastname'=>'required|string',
+            'birthDate'=>'required|string',
+            'numTel'=>'required|string',
+            'adresse'=>'required|string',
+        ]);
+
+        $profile = Profile::find($id);
+        $profile->firstname = $request->get('firstname');
+        $profile->lastname = $request->get('lastname');
+        $profile->birthDate = $request->get('birthDate');
+        $profile->numTel = $request->get('numTel');
+        $profile->adresse = $request->get('adresse');
+        $profile->save();
+
+        return redirect('/show')->with('success', 'Contact updated!');
+    }
+```
+
+#### Créer les page d'affichage, d'édition du profile avec les formulaires
+
+![edit1](images/edit1.PNG)
+
+Apres avoir modifier le profil on nous retournbe vers la page `/show` où nous pouvons constater les changement.
+
+![edit2](images/edit2.PNG)
+
+
+Si un champ est vide la fonction update ne se fait pas et nous renvoie un message d'erreur.
+
+![edit3](images/edit3.PNG)
